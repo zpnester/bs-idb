@@ -139,7 +139,7 @@ Idb.idb
           expectToEqual(store2->Idb.ObjectStore.name, "store2");
           expectToEqualAny(store2->Idb.ObjectStore.keyPath, "name");
           expectToEqual(
-            store2->Idb.ObjectStore.indexNamesArray,
+            store2->Idb.ObjectStore.indexNames,
             [|"index1"|],
           );
           expectToEqual(store2->Idb.ObjectStore.autoIncrement, false);

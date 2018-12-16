@@ -20,8 +20,10 @@ module IDBIndexParameters = {
 [@bs.get] external name: t => string = "name";
 [@bs.get] external keyPath: t => Js.Json.t = "keyPath";
 [@bs.get] external indexNames_: t => Idb_DOMStringList.t = "indexNames";
-let indexNamesArray = (self: t) =>
+
+let indexNames = (self: t) =>
   self->indexNames_->Idb_DOMStringList.toArray;
+
 [@bs.get] external autoIncrement: t => bool = "autoIncrement";
 
 [@bs.send]

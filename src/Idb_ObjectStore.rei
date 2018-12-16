@@ -2,7 +2,7 @@ include (module type of Idb_IndexStoreShared);
 
 let name: t => string;
 let keyPath: t => Js.Json.t;
-let indexNamesArray: t => array(string);
+let indexNames: t => array(string);
 let autoIncrement: t => bool;
 
 let put: (t, ~value: 'value, ~key: 'key=?, unit) => Js.Promise.t(unit);
