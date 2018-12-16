@@ -1,7 +1,15 @@
 {
   "name": "@zpnester/bs-idb",
-  "version": "0.1.0",
-  "author": "Andriy Nesterenko",
+  "version": "0.1.1",
+  "author": {
+    "name": "Andriy Nesterenko",
+    "email": "zpnester@gmail.com",
+    "url": "https://github.com/zpnester"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zpnester/bs-idb.git"
+  },
   "license": "MIT",
   "scripts": {
     "clean": "bsb -clean-world",
@@ -18,7 +26,7 @@
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.3",
-    "bs-platform": "^4.0.5",
+    "bs-platform": "^4.0.14",
     "expect": "^23.6.0",
     "jest": "^23.6.0",
     "jest-puppeteer": "^3.3.1",

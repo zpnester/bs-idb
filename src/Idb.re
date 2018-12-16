@@ -16,7 +16,7 @@ module UpgradeDB = Idb_UpgradeDB;
 
 let indexedDbSupported: unit => bool = [%bs.raw
   {|
-    function() {
+    function(unit) {
         return typeof indexedDB === "object" ;
     }
   |}
