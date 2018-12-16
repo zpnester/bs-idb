@@ -1,14 +1,14 @@
 type t;
 
 /* get: query (not key) is required */
-let get: (t, Idb_Query.t) => Js.Promise.t(option(Idb_Types.any));
+let get: (t, Idb_Query.t) => Js.Promise.t(Js.Json.t);
 /* getAll: query (not key) is optional */
 let getAll:
   (t, ~query: Idb_Query.t=?, ~count: int=?, unit) =>
-  Js.Promise.t(array(Idb_Types.any));
+  Js.Promise.t(array(Js.Json.t));
 let getAllKeys:
   (t, ~query: Idb_Query.t=?, ~count: int=?, unit) =>
-  Js.Promise.t(array(Idb_Types.any));
+  Js.Promise.t(array(Js.Json.t));
 let count: (t, ~query: Idb_Query.t=?, unit) => Js.Promise.t(int);
 let openCursor:
   (t, ~query: Idb_Query.t=?, ~direction: Idb_IDBCursorDirection.t=?, unit) =>

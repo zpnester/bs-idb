@@ -1,14 +1,14 @@
 include (module type of Idb_IndexStoreShared);
 
 let name: t => string;
-let keyPath: t => Idb_Types.any;
+let keyPath: t => Js.Json.t;
 let indexNamesArray: t => array(string);
 let autoIncrement: t => bool;
 
 let put: (t, ~value: 'value, ~key: 'key=?, unit) => Js.Promise.t(unit);
 let add: (t, ~value: 'value, ~key: 'key=?, unit) => Js.Promise.t(unit);
 let delete: (t, 'key) => Js.Promise.t(unit);
-let clear: (t, unit) => Js.Promise.t(unit);
+let clear: t => Js.Promise.t(unit);
 let deleteIndex: (t, string) => unit;
 let createIndex:
   (

@@ -6,7 +6,7 @@ type key_path = [ `String(string) | `Strings(array(string))];
 
 /* this is a property rather than a method. It's a Transaction representing the upgrade transaction */
 [@bs.get] external transaction: t =>  Idb_Transaction.t = "transaction";
-[@bs.get] external oldVersion: t => Idb_Types.db_version = "oldVersion";
+[@bs.get] external oldVersion: t => int = "oldVersion";
 
 [@bs.send]
 external createObjectStore_:

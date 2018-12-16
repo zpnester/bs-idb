@@ -15,6 +15,5 @@ type t;
 let indexedDbSupported: unit => bool;
 let idb: t;
 let open_:
-  (t, string, Idb_Types.db_version, Idb_UpgradeDB.t => unit) =>
-  Js.Promise.t(Idb_DB.t);
+  (t, string, int, Idb_UpgradeDB.t => unit) => Js.Promise.t(Idb_DB.t);
 let delete: (t, string) => Js.Promise.t(unit);

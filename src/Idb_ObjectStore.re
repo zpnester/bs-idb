@@ -18,7 +18,7 @@ module IDBIndexParameters = {
 };
 
 [@bs.get] external name: t => string = "name";
-[@bs.get] external keyPath: t => Idb_Types.any = "keyPath";
+[@bs.get] external keyPath: t => Js.Json.t = "keyPath";
 [@bs.get] external indexNames_: t => Idb_DOMStringList.t = "indexNames";
 let indexNamesArray = (self: t) =>
   self->indexNames_->Idb_DOMStringList.toArray;
@@ -40,7 +40,7 @@ let add = (store: t, ~value: 'value, ~key: option('key)=?, ()) =>
 
 [@bs.send] external delete: (t, 'key) => Js.Promise.t(unit) = "delete";
 
-[@bs.send] external clear: (t, unit) => Js.Promise.t(unit) = "clear";
+[@bs.send] external clear: t => Js.Promise.t(unit) = "clear";
 
 [@bs.send] external deleteIndex: (t, string) => unit = "deleteIndex";
 

@@ -2,7 +2,7 @@ include (module type of Idb_DBBase);
 
 /* "this is a property rather than a method. It's a Transaction representing the upgrade transaction" */
 let transaction: t => Idb_Transaction.t;
-let oldVersion: t => Idb_Types.db_version;
+let oldVersion: t => int;
 
 let createObjectStore:
   (

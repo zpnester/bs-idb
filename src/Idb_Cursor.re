@@ -1,11 +1,11 @@
 type t;
 
 [@bs.get] external direction: t => Idb_IDBCursorDirection.t = "direction";
-[@bs.get] external key_: t => Js.Nullable.t(Idb_Types.any) = "key";
+[@bs.get] external key: t => Js.Json.t = "key";
 [@bs.get]
-external primaryKey_: t => Js.Nullable.t(Idb_Types.any) = "primaryKey";
+external primaryKey: t => Js.Json.t = "primaryKey";
 
-[@bs.get] external value: t => Idb_Types.any = "value";
+[@bs.get] external value: t => Js.Json.t = "value";
 
 [@bs.send] external update: (t, 'value) => Js.Promise.t(unit) = "update";
 
@@ -22,9 +22,7 @@ external continuePrimaryKey_:
   (t, 'key, 'pkey) => Js.Promise.t(Js.Nullable.t(t)) =
   "continuePrimaryKey";
 
-let key = (self: t) => self->key_->Js.Nullable.toOption;
 
-let primaryKey = (self: t) => self->primaryKey_->Js.Nullable.toOption;
 
 let advance = (self: t, count: int) =>
   Js.Promise.(

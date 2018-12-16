@@ -1,5 +1,3 @@
-open Idb_Types;
-
 module IDBRequest = Idb_IDBRequest;
 module DOMStringList = Idb_DOMStringList;
 module Query = Idb_Query;
@@ -28,7 +26,7 @@ type t;
 
 [@bs.send]
 external open_:
-  (t, string, db_version, Idb_UpgradeDB.t => unit) => Js.Promise.t(Idb_DB.t) =
+  (t, string, int, Idb_UpgradeDB.t => unit) => Js.Promise.t(Idb_DB.t) =
   "open";
 
 [@bs.send] external delete: (t, string) => Js.Promise.t(unit) = "delete";

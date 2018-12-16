@@ -62,7 +62,7 @@ Idb.idb
     },
   )
 |> then_(db => {
-     let tx = db->Idb.DB.transactionReadOnly("store1");
+     let tx = db->Idb.DB.transaction(`String("store1"), `readonly);
      let store1 = tx->Idb.Transaction.objectStore("store1");
      expectToEqual(store1->Idb.ObjectStore.name, "store1");
 
@@ -70,13 +70,13 @@ Idb.idb
      |> then_(values => {
           expectToEqual(values, [||]);
 
-          let tx = db->Idb.DB.transactionReadWrite("store1");
+          let tx = db->Idb.DB.transaction(`String("store1"), `readwrite);
           let store1 = tx->Idb.Transaction.objectStore("store1");
 
           store1->Idb.ObjectStore.put(~value="bar", ~key="foo", ());
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadOnly("store1");
+          let tx = db->Idb.DB.transaction(`String("store1"), `readonly);
           let store = tx->Idb.Transaction.objectStore("store1");
 
           store->Idb.ObjectStore.getAll();
@@ -84,28 +84,28 @@ Idb.idb
      |> then_(values => {
           expectToEqualAny(values, [|"bar"|]);
 
-          let tx = db->Idb.DB.transactionReadWrite("store3");
+          let tx = db->Idb.DB.transaction(`String("store3"), `readwrite);
           let store3 = tx->Idb.Transaction.objectStore("store3");
           store3->Idb.ObjectStore.put(~value="first", ());
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store3");
+          let tx = db->Idb.DB.transaction(`String("store3"), `readwrite);
           let store3 = tx->Idb.Transaction.objectStore("store3");
           store3->Idb.ObjectStore.put(~value="second", ());
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store3");
+          let tx = db->Idb.DB.transaction(`String("store3"), `readwrite);
           let store3 = tx->Idb.Transaction.objectStore("store3");
           store3->Idb.ObjectStore.put(~value="third", ());
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store3");
+          let tx = db->Idb.DB.transaction(`String("store3"), `readwrite);
           let store3 = tx->Idb.Transaction.objectStore("store3");
 
           store3->Idb.ObjectStore.delete(2);
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadOnly("store3");
+          let tx = db->Idb.DB.transaction(`String("store3"), `readonly);
           let store3 = tx->Idb.Transaction.objectStore("store3");
 
           store3->Idb.ObjectStore.getAll();
@@ -115,12 +115,12 @@ Idb.idb
           resolve();
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store3");
+          let tx = db->Idb.DB.transaction(`String("store3"), `readwrite);
           let store3 = tx->Idb.Transaction.objectStore("store3");
-          store3->Idb.ObjectStore.clear();
+          store3->Idb.ObjectStore.clear;
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadOnly("store3");
+          let tx = db->Idb.DB.transaction(`String("store3"), `readwrite);
           let store3 = tx->Idb.Transaction.objectStore("store3");
 
           store3->Idb.ObjectStore.getAll();
@@ -131,7 +131,7 @@ Idb.idb
           resolve();
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           expectToEqual(store2->Idb.ObjectStore.name, "store2");
@@ -154,7 +154,7 @@ Idb.idb
           );
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           resolve(
@@ -163,13 +163,13 @@ Idb.idb
           );
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           resolve(store2->Idb.ObjectStore.getAll());
         })
      |> then_(all => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           expectToEqualAny(
@@ -183,22 +183,22 @@ Idb.idb
              ) */
         })
      |> then_(maybeJohn => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
-          let store2 = tx->Idb.Transaction.objectStore("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
+          let store2 = tx->Idb.Transaction.objectStore("store2"); 
 
           expectToEqualAny(maybeJohn, {"name": "john", "age": 30});
           store2->Idb.ObjectStore.get(Idb.Query.key("unknown"));
         })
      |> then_(maybeUnknown => {
-          expectToEqual(maybeUnknown->Belt.Option.isNone, true);
+          expectToEqual(Js.typeof(maybeUnknown), "undefined");
 
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           store2->Idb.ObjectStore.getAllKeys();
         })
      |> then_(keys => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           expectToEqualAny(keys, [|"jane", "john"|]);
@@ -207,7 +207,7 @@ Idb.idb
      |> then_(cnt => {
           expectToEqual(cnt, 2);
 
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           store2->Idb.ObjectStore.count(~query=Idb.Query.only("jane"), ());
@@ -215,7 +215,7 @@ Idb.idb
      |> then_(cnt => {
           expectToEqual(cnt, 1);
 
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           store2->Idb.ObjectStore.openCursor();
@@ -248,7 +248,7 @@ Idb.idb
      |> then_(maybeCursor => {
           expectToEqual(maybeCursor->Belt.Option.isSome, false);
 
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           let arr = [||];
@@ -270,7 +270,7 @@ Idb.idb
             [|{"age": 20, "name": "jane"}, {"age": 30, "name": "john"}|],
           );
 
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           let arr = [||];
@@ -292,7 +292,7 @@ Idb.idb
           resolve();
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           store2
@@ -307,7 +307,7 @@ Idb.idb
           cursor->Idb.Cursor.update({"name": "john", "age": 31});
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           let index1 = store2->Idb.ObjectStore.index("index1");
@@ -318,7 +318,7 @@ Idb.idb
           resolve();
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           let index1 = store2->Idb.ObjectStore.index("index1");
@@ -338,7 +338,7 @@ Idb.idb
           resolve();
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadWrite("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           store2
@@ -349,13 +349,14 @@ Idb.idb
           cursor->Idb.Cursor.delete;
         })
      |> then_(_ => {
-          let tx = db->Idb.DB.transactionReadOnly("store2");
+          let tx = db->Idb.DB.transaction(`String("store2"), `readwrite);
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           store2->Idb.ObjectStore.getAll();
         })
      |> then_(all => {
           expectToEqualAny(all, [|{"age": 31, "name": "john"}|]);
+          Js.log("OK");
           resolve();
         });
    })

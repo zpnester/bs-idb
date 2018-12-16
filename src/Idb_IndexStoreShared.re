@@ -1,19 +1,19 @@
 type t;
 
 [@bs.send]
-external get_: (t, Idb_Query.t) => Js.Promise.t(Js.Nullable.t(Idb_Types.any)) =
+external get: (t, Idb_Query.t) => Js.Promise.t(Js.Json.t) =
   "get";
 
 [@bs.send]
 external getAll_:
   (t, Js.Nullable.t(Idb_Query.t), Js.Nullable.t(int)) =>
-  Js.Promise.t(array(Idb_Types.any)) =
+  Js.Promise.t(array(Js.Json.t)) =
   "getAll";
 
 [@bs.send]
 external getAllKeys_:
   (t, Js.Nullable.t(Idb_Query.t), Js.Nullable.t(int)) =>
-  Js.Promise.t(array(Idb_Types.any)) =
+  Js.Promise.t(array(Js.Json.t)) =
   "getAllKeys";
 
 [@bs.send]
@@ -32,10 +32,7 @@ external openKeyCursor_:
   Js.Promise.t(Js.Nullable.t(Idb_Cursor.t)) =
   "openKeyCursor";
 
-let get = (self: t, key: Idb_Query.t) =>
-  Js.Promise.(
-    self->get_(key) |> then_(maybe => resolve(maybe->Js.Nullable.toOption))
-  );
+
 
 let getAll =
     (self: t, ~query: option(Idb_Query.t)=?, ~count: option(int)=?, ()) =>
