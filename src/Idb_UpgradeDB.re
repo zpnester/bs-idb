@@ -26,7 +26,7 @@ let createObjectStore =
     let opts = switch (keyPath) {
       | Some(`String(str)) => Js.Obj.assign(opts, { "keyPath": str })
       | Some(`Strings(strs)) => Js.Obj.assign(opts, { "keyPath": strs })
-      | _ => opts
+      | None => opts
     };
     self->createObjectStore_(name, opts);
 };

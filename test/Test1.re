@@ -13,12 +13,12 @@ Idb.idb
       expectToEqual(udb->Idb.UpgradeDB.oldVersion, 0);
       expectToEqual(udb->Idb.UpgradeDB.version, 1);
       expectToEqual(udb->Idb.UpgradeDB.name, "db1");
-      expectToEqual(udb->Idb.UpgradeDB.objectStoreNamesArray, [||]);
+      expectToEqual(udb->Idb.UpgradeDB.objectStoreNames, [||]);
 
       udb->Idb.UpgradeDB.createObjectStore("store1", ()) |> ignore;
       udb
       ->Idb.UpgradeDB.createObjectStore(
-          "store2",
+          "store2", 
           ~keyPath=`String("name"),
           (),
         )
@@ -28,12 +28,12 @@ Idb.idb
 
       udb->Idb.UpgradeDB.createObjectStore("store10", ()) |> ignore;
       expectToEqual(
-        upgradeTx->Idb.Transaction.objectStoreNamesArray,
+        upgradeTx->Idb.Transaction.objectStoreNames,
         [|"store1", "store10", "store2", "store3"|],
       );
       udb->Idb.UpgradeDB.deleteObjectStore("store10");
       expectToEqual(
-        upgradeTx->Idb.Transaction.objectStoreNamesArray,
+        upgradeTx->Idb.Transaction.objectStoreNames,
         [|"store1", "store2", "store3"|],
       );
 

@@ -14,6 +14,8 @@ module UpgradeDB = Idb_UpgradeDB;
 /* this one won't work in service worker */
 /* {| new Boolean('indexedDB' in window) |} */
 
+
+/* naming empty parameter is important, 'function()' will not work in BuckleScript >= 4.0.7 */
 let indexedDbSupported: unit => bool = [%bs.raw
   {|
     function(unit) {

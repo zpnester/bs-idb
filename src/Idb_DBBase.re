@@ -4,6 +4,7 @@ type t;
 [@bs.get] external version: t => int = "";
 [@bs.get]
 external objectStoreNames_: t => Idb_DOMStringList.t = "objectStoreNames";
-let objectStoreNamesArray = (self: t) =>
+
+let objectStoreNames = (self: t) =>
   self->objectStoreNames_->Idb_DOMStringList.toArray;
 [@bs.send] external close: t => unit = "";
