@@ -10,7 +10,6 @@ module DB = Idb_DB;
 module UpgradeDB = Idb_UpgradeDB;
 
 type t;
-let indexedDbSupported: unit => bool;
 let idb: t;
 let open_:
   (t, string, int, Idb_UpgradeDB.t => unit) => Js.Promise.t(Idb_DB.t);

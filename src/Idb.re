@@ -9,19 +9,6 @@ module Transaction = Idb_Transaction;
 module DB = Idb_DB;
 module UpgradeDB = Idb_UpgradeDB;
 
-/* this one won't work in service worker */
-/* {| new Boolean('indexedDB' in window) |} */
-
-
-/* naming empty parameter is important, 'function()' will not work in BuckleScript >= 4.0.7 */
-let indexedDbSupported: unit => bool = [%bs.raw
-  {|
-    function(unit) {
-        return typeof indexedDB === "object" ;
-    }
-  |}
-];
-
 type t;
 
 [@bs.send]

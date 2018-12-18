@@ -1,7 +1,6 @@
 open Js.Promise;
 open Prelude;
 
-Js.log(Idb.indexedDbSupported());
 
 Idb.idb
 ->Idb.open_(
