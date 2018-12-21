@@ -1,9 +1,10 @@
 open Js.Promise;
 open Prelude;
+open Belt;
+open Idb;
 
-
-Idb.idb
-->Idb.open_(
+idb->Option.getExn
+->open_(
     "db1",
     1,
     udb => {

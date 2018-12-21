@@ -18,4 +18,10 @@ external open_:
 
 [@bs.send] external delete: (t, string) => Js.Promise.t(unit) = "delete";
 
-[@bs.module] external idb: t = "idb";
+[@bs.module] external idb_: t = "idb";
+
+let idb__: Js.Nullable.t(t) = [%raw {|
+(typeof indexedDB == "object") ? (require("idb")) : (null)
+|}];
+
+let idb = idb__->Js.Nullable.toOption;
