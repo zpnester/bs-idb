@@ -11,10 +11,10 @@ let getAllKeys:
   Js.Promise.t(array(Js.Json.t));
 let count: (t, ~query: Idb_Query.t=?, unit) => Js.Promise.t(int);
 let openCursor:
-  (t, ~query: Idb_Query.t=?, ~direction: Idb_IDBCursorDirection.t=?, unit) =>
+  (t, ~query: Idb_Query.t=?, ~direction: [`next | `nextunique | `prev | `prevunique ]=?, unit) =>
   Js.Promise.t(option(Idb_Cursor.t));
 let openKeyCursor:
-  (t, ~query: Idb_Query.t=?, ~direction: Idb_IDBCursorDirection.t=?, unit) =>
+  (t, ~query: Idb_Query.t=?, ~direction: [`next | `nextunique | `prev | `prevunique ]=?, unit) =>
   Js.Promise.t(option(Idb_Cursor.t));
 
 /* "Due to the microtask issues in some browsers, iterating over a cursor using promises doesn't always work" */

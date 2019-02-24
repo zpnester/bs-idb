@@ -12,13 +12,13 @@ module UpgradeDB = Idb_UpgradeDB;
 type t;
 
 [@bs.send]
-external open_:
+external openDb:
   (t, string, int, Idb_UpgradeDB.t => unit) => Js.Promise.t(Idb_DB.t) =
-  "open";
+  "openDb";
 
-[@bs.send] external delete: (t, string) => Js.Promise.t(unit) = "delete";
+[@bs.send] external deleteDb: (t, string) => Js.Promise.t(unit) = "deleteDb";
 
-[@bs.module] external idb_: t = "idb";
+/*[@bs.module] external idb_: t = "idb";*/
 
 let idb__: Js.Nullable.t(t) = [%raw {|
 (typeof indexedDB == "object") ? (require("idb")) : (null)

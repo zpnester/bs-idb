@@ -2,7 +2,15 @@ type t;
 type idb_cursor_source;
 
 [@bs.get] external source: t => idb_cursor_source = "source";
-[@bs.get] external direction: t => Idb_IDBCursorDirection.t = "direction";
+[@bs.get] external direction_: t => string= "direction";
+let direction = self => switch (direction_(self)) {
+  | "next" => `next
+  | "nextunique" => `nextunique
+  | "prev" => `prev
+  | "prevunique" => `prevunique
+  | d => failwith("Unknown direction: " ++ d)
+};
+
 [@bs.get] external key: t => Js.Json.t = "key";
 [@bs.get] external value: t => Js.Json.t = "value";
 

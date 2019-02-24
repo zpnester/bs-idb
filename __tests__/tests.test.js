@@ -7,5 +7,9 @@ test("test1", () => {
             return page.evaluate(() => {
                 return result;
             });
-        });
+        })
+        // catch here does not prevent test failing
+        .catch(result => {
+        	console.log("result", result);
+        })
 })

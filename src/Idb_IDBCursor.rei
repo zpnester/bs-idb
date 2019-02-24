@@ -2,7 +2,7 @@ type t;
 type idb_cursor_source;
 
 let source: t => idb_cursor_source;
-let direction: t => Idb_IDBCursorDirection.t;
+let direction: t => [`next | `nextunique | `prev | `prevunique ];
 let value: t => Js.Json.t;
 let advance: (t, int) => unit;
 let delete: t => Idb_IDBRequest.t;

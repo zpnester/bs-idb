@@ -11,6 +11,6 @@ module UpgradeDB = Idb_UpgradeDB;
 
 type t;
 let idb: option(t);
-let open_:
+let openDb:
   (t, string, int, Idb_UpgradeDB.t => unit) => Js.Promise.t(Idb_DB.t);
-let delete: (t, string) => Js.Promise.t(unit);
+let deleteDb: (t, string) => Js.Promise.t(unit);

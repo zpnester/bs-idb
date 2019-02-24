@@ -1,6 +1,6 @@
 type t;
 
-let direction: t => Idb_IDBCursorDirection.t;
+let direction: t => [`next | `nextunique | `prev | `prevunique ];
 let value: t => Js.Json.t;
 let update: (t, 'value) => Js.Promise.t(unit);
 let delete: t => Js.Promise.t(unit);

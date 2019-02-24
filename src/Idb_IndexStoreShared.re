@@ -22,13 +22,15 @@ external count_: (t, Js.Nullable.t(Idb_Query.t)) => Js.Promise.t(int) =
 
 [@bs.send]
 external openCursor_:
-  (t, Js.Nullable.t(Idb_Query.t), Js.Nullable.t(Idb_IDBCursorDirection.t)) =>
+  (t, ~query: Idb_Query.t=?,
+  ~direction:  [@bs.string]  [`next | `nextunique | `prev | `prevunique ]=?, unit) =>
   Js.Promise.t(Js.Nullable.t(Idb_Cursor.t)) =
   "openCursor";
 
 [@bs.send]
 external openKeyCursor_:
-  (t, Js.Nullable.t(Idb_Query.t), Js.Nullable.t(Idb_IDBCursorDirection.t)) =>
+  (t, ~query: Idb_Query.t=?, 
+     ~direction: [@bs.string] [`next | `nextunique | `prev | `prevunique ]=?, unit) =>
   Js.Promise.t(Js.Nullable.t(Idb_Cursor.t)) =
   "openKeyCursor";
 
@@ -59,15 +61,12 @@ let openCursor =
     (
       self: t,
       ~query: option(Idb_Query.t)=?,
-      ~direction: option(Idb_IDBCursorDirection.t)=?,
+      ~direction: option([`next | `nextunique | `prev | `prevunique ])=?,
       (),
     ) =>
   Js.Promise.(
     self
-    ->openCursor_(
-        Js.Nullable.fromOption(query),
-        Js.Nullable.fromOption(direction),
-      )
+    ->openCursor_(~query?, ~direction?, ())
     |> then_(maybe => resolve(Js.Nullable.toOption(maybe)))
   );
 
@@ -75,15 +74,12 @@ let openKeyCursor =
     (
       self: t,
       ~query: option(Idb_Query.t)=?,
-      ~direction: option(Idb_IDBCursorDirection.t)=?,
+      ~direction: option([`next | `nextunique | `prev | `prevunique ])=?,
       (),
     ) =>
   Js.Promise.(
     self
-    ->openKeyCursor_(
-        Js.Nullable.fromOption(query),
-        Js.Nullable.fromOption(direction),
-      )
+    ->openKeyCursor_(~query?, ~direction?, ())
     |> then_(maybe => resolve(Js.Nullable.toOption(maybe)))
   );
 

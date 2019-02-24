@@ -4,7 +4,7 @@ open Belt;
 open Idb;
 
 idb->Option.getExn
-->open_(
+->openDb(
     "db1",
     1,
     udb => {
@@ -63,6 +63,13 @@ idb->Option.getExn
       ();
     },
   )
+|> then_(db => {
+  /* does not throw */
+  idb->Option.getExn->deleteDb("db2")
+  |> then_(_ => {
+    resolve(db);
+  })
+})
 |> then_(db => {
      let tx = db->Idb.DB.transaction(`String("store1"), `readonly);
      let store1 = tx->Idb.Transaction.objectStore("store1");
@@ -226,11 +233,11 @@ idb->Option.getExn
           expectToEqual(maybeCursor->Belt.Option.isSome, true);
           let cursor = maybeCursor->Belt.Option.getExn;
 
-          expectToEqual(cursor->Idb.Cursor.direction, "next");
+          expectToEqual(cursor->Idb.Cursor.direction, `next);
           expectToEqualAny(cursor->Idb.Cursor.key, "jane");
           expectToEqualAny(cursor->Idb.Cursor.primaryKey, "jane");
           expectToEqualAny(
-            cursor->Idb.Cursor.value,
+            cursor->Idb.Cursor.value, 
             {"name": "jane", "age": 20},
           );
 
@@ -300,9 +307,9 @@ idb->Option.getExn
           store2
           ->Idb.ObjectStore.openCursor(
               ~query=Idb.Query.key("john"),
-              ~direction=Idb.IDBCursorDirection.prev,
+              ~direction=`next,
               (),
-            );
+            ); 
         })
      |> then_(maybeCursor => {
           let cursor = maybeCursor->Belt.Option.getExn;
@@ -313,6 +320,7 @@ idb->Option.getExn
           let store2 = tx->Idb.Transaction.objectStore("store2");
 
           let index1 = store2->Idb.ObjectStore.index("index1");
+
           index1->Idb.Index.getKey(~query=Idb.Query.key([|31|]), ());
         })
      |> then_(pk => {
@@ -358,8 +366,11 @@ idb->Option.getExn
         })
      |> then_(all => {
           expectToEqualAny(all, [|{"age": 31, "name": "john"}|]);
+          resolve()
+        })
+      |> then_(_ => {
           Js.log("OK");
           resolve();
-        });
+      })
    })
 |> setResult;
