@@ -18,8 +18,10 @@ external primaryKey: t => Js.Json.t = "primaryKey";
 [@bs.send] external update: (t, 'value) => Js.Promise.t(unit) = "update";
 
 [@bs.send] external delete: t => Js.Promise.t(unit) = "delete";
+
 [@bs.send]
 external advance_: (t, int) => Js.Promise.t(Js.Nullable.t(t)) = "advance";
+
 [@bs.send]
 external continue_:
   (t, Js.Nullable.t('key)) => Js.Promise.t(Js.Nullable.t(t)) =

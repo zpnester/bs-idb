@@ -1,8 +1,8 @@
 include (module type of Idb_DBBase);
 
-/* "this is a property rather than a method. It's a Transaction representing the upgrade transaction" */
-let transaction: t => Idb_Transaction.t;
-let oldVersion: t => int;
+[@bs.get] external transaction: t => Idb_Transaction.t = "transaction";
+
+[@bs.get] external oldVersion: t => int = "oldVersion";
 
 let createObjectStore:
   (
@@ -14,4 +14,5 @@ let createObjectStore:
   ) =>
   Idb_ObjectStore.t;
 
-let deleteObjectStore: (t, string) => unit;
+[@bs.send]
+external deleteObjectStore: (t, string) => unit = "deleteObjectStore";

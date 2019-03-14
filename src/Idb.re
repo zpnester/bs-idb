@@ -1,7 +1,6 @@
 module IDBRequest = Idb_IDBRequest;
 module IDBCursor = Idb_IDBCursor;
 module Query = Idb_Query;
-module IDBCursorDirection = Idb_IDBCursorDirection;
 module Cursor = Idb_Cursor;
 module Index = Idb_Index;
 module ObjectStore = Idb_ObjectStore;
@@ -18,10 +17,10 @@ external openDb:
 
 [@bs.send] external deleteDb: (t, string) => Js.Promise.t(unit) = "deleteDb";
 
-/*[@bs.module] external idb_: t = "idb";*/
-
-let idb__: Js.Nullable.t(t) = [%raw {|
+let idb__: Js.Nullable.t(t) = [%raw
+  {|
 (typeof indexedDB == "object") ? (require("idb")) : (null)
-|}];
+|}
+];
 
 let idb = idb__->Js.Nullable.toOption;

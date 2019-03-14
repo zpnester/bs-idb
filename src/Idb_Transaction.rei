@@ -1,7 +1,12 @@
 type t;
 
-let complete: t => Js.Promise.t(unit);
-let mode: t => string;
+[@bs.get] external complete: t => Js.Promise.t(unit) = "complete";
+
+[@bs.get] external mode: t => string = "mode";
+
 let objectStoreNames: t => array(string);
-let abort: t => unit;
-let objectStore: (t, string) => Idb_ObjectStore.t;
+
+[@bs.send] external abort: t => unit = "abort";
+
+[@bs.send]
+external objectStore: (t, string) => Idb_ObjectStore.t = "objectStore";

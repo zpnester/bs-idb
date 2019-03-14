@@ -1,10 +1,11 @@
 type t;
 
-[@bs.get] external name: t => string = "";
-[@bs.get] external version: t => int = "";
+[@bs.get] external name: t => string = "name";
+[@bs.get] external version: t => int = "version";
 [@bs.get]
-external objectStoreNames_: t => Idb_DOMStringList.t = "objectStoreNames";
+external objectStoreNames_: t => Js.Array.array_like(string) = "objectStoreNames";
 
 let objectStoreNames = (self: t) =>
-  self->objectStoreNames_->Idb_DOMStringList.toArray;
-[@bs.send] external close: t => unit = "";
+  self->objectStoreNames_->Js.Array.from;
+  
+[@bs.send] external close: t => unit = "close";

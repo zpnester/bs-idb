@@ -1,6 +1,9 @@
 type t;
 
-let name: t => string;
-let version: t => int;
+[@bs.get] external name: t => string = "name";
+
+[@bs.get] external version: t => int = "version";
+
 let objectStoreNames: t => array(string);
-let close: t => unit;
+
+[@bs.send] external close: t => unit = "close";
