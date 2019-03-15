@@ -1,14 +1,11 @@
 type t;
 
-external key: 'a => t = "%identity";
+let key: 'a => t;
 
-[@bs.val] [@bs.scope "IDBKeyRange"]
-external upperBound: ('a, bool) => t = "upperBound";
+let upperBound: ('a, bool) => t;
 
-[@bs.val] [@bs.scope "IDBKeyRange"]
-external lowerBound: ('a, bool) => t = "lowerBound";
+let lowerBound: ('a, bool) => t;
 
-[@bs.val] [@bs.scope "IDBKeyRange"]
-external bound: ('a, 'a, bool, bool) => t = "bound";
+let bound: ('a, 'a, bool, bool) => t;
 
-[@bs.val] [@bs.scope "IDBKeyRange"] external only: 'a => t = "only";
+let only: 'a => t;
