@@ -1,6 +1,6 @@
 # bs-idb
 
-idb (IndexedDB with promises) bindings for BuckleScript
+idb 3 bindings for BuckleScript
 
 ## Install
 
